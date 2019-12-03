@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
-
+import time
 import warnings
 warnings.filterwarnings(action="ignore")
 
@@ -98,6 +98,7 @@ def normalization(traindf, df):
             # for some reasons trainset["balance"].mean() results into "inf" after the log transformation so we hard coded the train mean here
             train_mean = 8.995432292407646
             df[col] = (df[col] - train_mean) / traindf[col].std()
+    return df
 
 
 def split_data(df):
@@ -116,6 +117,7 @@ def split_data(df):
     return trainset, validset, testset
 
 
-df = pd.read_csv("data/bank.csv", sep=",")
-df = transform_pipeline(df)
-train, valid, test = split_data(df)
+def main():
+    df = pd.read_csv("data/bank.csv", sep=",")
+    df = transform_pipeline(df)
+    train, valid, test = split_data(df)
